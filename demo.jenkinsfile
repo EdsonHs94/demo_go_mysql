@@ -48,7 +48,7 @@ pipeline {
     
     stage ('Build') {
       steps {
-        sh "docker build -f docker/app/Dockerfile docker/app"
+        sh "docker build -f docker/app/Dockerfile -t goland-demo:${BUILD_NUMBER} docker/app"
       }
     }
   }
