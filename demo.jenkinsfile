@@ -48,18 +48,14 @@ pipeline {
     
     stage ('Build') {
       steps {
-        sh "zip -r ${env.ARTIFACT} ./"
-        archiveArtifacts artifacts: "${env.ARTIFACT}", onlyIfSuccessful: true
-        sh "rm -rf ${env.ARTIFACT}"
+        sh "docker build -f docker/app/Dockerfile docker/app"
       }
     }
   }
 
   post {
     always {
-      sh "zip -r ${env.ARTIFACT} ./"
-      archiveArtifacts artifacts: "${env.ARTIFACT}", onlyIfSuccessful: true
-      sh "rm -f ${ARTIFACT}"
+      sh "docker images | grep golang"
       echo "Job has finished"
     }
     success {
